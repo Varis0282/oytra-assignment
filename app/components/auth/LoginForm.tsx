@@ -6,7 +6,6 @@ import Link from 'next/link';
 
 export default function LoginForm() {
   const router = useRouter();
-  const searchParams = useSearchParams();
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -16,12 +15,12 @@ export default function LoginForm() {
   const [successMessage, setSuccessMessage] = useState('');
 
   useEffect(() => {
-    // Check if user was redirected from signup
-    const registered = searchParams.get('registered');
+    const params = new URLSearchParams(window.location.search);
+    const registered = params.get('registered');
     if (registered === 'true') {
       setSuccessMessage('Registration successful! Please login with your credentials.');
     }
-  }, [searchParams]);
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
