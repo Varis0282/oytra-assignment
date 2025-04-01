@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
 import { verify } from 'jsonwebtoken';
 import File from '@/models/File';
+import connectToDatabase from '@/lib/db';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
 
@@ -31,6 +32,8 @@ const mockStats = {
 export async function GET(request: Request) {
   try {
     const token = cookies().get('auth-token')?.value;
+
+    await connectToDatabase();
 
     if (!token) {
       return NextResponse.json(
