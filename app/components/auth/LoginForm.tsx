@@ -12,6 +12,7 @@ export default function LoginForm() {
     password: '',
   });
   const [error, setError] = useState('');
+  const [disabled, setDisabled] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
 
   useEffect(() => {
@@ -28,6 +29,7 @@ export default function LoginForm() {
     setSuccessMessage('');
 
     try {
+      setDisabled(true);
       const response = await fetch('/api/auth/login', {
         method: 'POST',
         headers: {
@@ -39,17 +41,14 @@ export default function LoginForm() {
       const data = await response.json();
 
       if (response.ok) {
-        // Store the token in localStorage
-        // localStorage.setItem('token', data.token);
-        // store token in cookie
-        document.cookie = `auth-token=${data.token}; path=/; max-age=8`;
-        // Optionally, you can also store user info in localStorage or context
-        // Redirect to dashboard
-        router.push('/dashboard');
+        document.cookie = `auth-token=${data.token}; path=/; max-age=86400;`;
+        router.push('/');
       } else {
         setError(data.error || 'Login failed');
       }
+      setDisabled(false);
     } catch (err) {
+      setDisabled(false);
       setError('An error occurred during login');
     }
   };
@@ -109,22 +108,31 @@ export default function LoginForm() {
           <div>
             <button
               type="submit"
-              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              disabled={disabled}
+              className={`relative w-full flex items-center justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white transition
+                          ${disabled ? 'opacity-50 cursor-not-allowed' : 'hover:bg-indigo-700'}
+                          ${error ? 'bg-red-600 focus:ring-red-500' : 'bg-indigo-600 focus:ring-indigo-500'}
+                          focus:outline-none focus:ring-2 focus:ring-offset-2
+                        `}
             >
-              Sign in
+              {disabled ? (
+                <div className="h-5 w-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+              ) : (
+                'Sign in'
+              )}
             </button>
-          </div>
 
-          <div className="text-center">
-            <p className="text-sm text-gray-600">
-              Don't have an account?{' '}
-              <Link
-                href="/signup"
-                className="font-medium text-indigo-600 hover:text-indigo-500"
-              >
-                Sign up
-              </Link>
-            </p>
+            <div className="text-center">
+              <p className="text-sm text-gray-600">
+                Don't have an account?{' '}
+                <Link
+                  href="/signup"
+                  className="font-medium text-indigo-600 hover:text-indigo-500"
+                >
+                  Sign up
+                </Link>
+              </p>
+            </div>
           </div>
         </form>
       </div>

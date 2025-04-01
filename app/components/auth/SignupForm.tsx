@@ -165,10 +165,17 @@ export default function SignupForm() {
             <button
               type="submit"
               disabled={disabled}
-              className={`${disabled && 'opacity-50 cursor-not-allowed'} ${error ? 'bg-red-600' : 'bg-indigo-600'
-                } group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500`}
+              className={`relative w-full flex items-center justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white transition
+                          ${disabled ? 'opacity-50 cursor-not-allowed' : 'hover:bg-indigo-700'}
+                          ${error ? 'bg-red-600 focus:ring-red-500' : 'bg-indigo-600 focus:ring-indigo-500'}
+                          focus:outline-none focus:ring-2 focus:ring-offset-2
+                        `}
             >
-              Sign up
+              {disabled ? (
+                <div className="h-5 w-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+              ) : (
+                'Sign up'
+              )}
             </button>
           </div>
         </form>
