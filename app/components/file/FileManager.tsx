@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 
 interface FileData {
   id: string;
-  filename: string;
+  originalName: string;
   uploadDate: string;
   fileType: string;
   size: number;
@@ -64,22 +64,11 @@ export default function FileManager() {
     }
   };
 
-  const handleDownload = async (fileId: string) => {
-    try {
-      const response = await fetch(`/api/files/${fileId}/download`);
-      if (response.status === 401) {
-        window.location.href = '/login';
-        return;
-      }
-      if (response.ok) {
-        const blob = await response.blob();
-        const url = window.URL.createObjectURL(blob);
-        window.open(url);
-      }
-    } catch (err) {
-      setError('Failed to download file');
-    }
+  const handleDownload = (fileId: string) => {
+    const downloadUrl = `/api/files/${fileId}/download`;
+    window.open(downloadUrl, '_blank');
   };
+
 
   return (
     <div className="p-6">
@@ -131,7 +120,7 @@ export default function FileManager() {
                     onClick={() => handleDownload(file.id)}
                     className="text-blue-600 hover:text-blue-800"
                   >
-                    {file.filename}
+                    {file.originalName}
                   </button>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">

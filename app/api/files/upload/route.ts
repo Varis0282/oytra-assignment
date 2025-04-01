@@ -1,13 +1,11 @@
 import { NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
 import { verify } from 'jsonwebtoken';
-import { writeFile } from 'fs/promises';
-import { join } from 'path';
+import cloudinary from '@/lib/cloudinary';
 import connectToDatabase from '@/lib/db';
 import File from '@/models/File';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
-const UPLOAD_DIR = process.env.UPLOAD_DIR || 'uploads';
 
 export async function POST(request: Request) {
   try {
@@ -16,51 +14,62 @@ export async function POST(request: Request) {
     await connectToDatabase();
 
     if (!token) {
-      return NextResponse.json(
-        { error: 'Unauthorized' },
-        { status: 401 }
-      );
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    // Verify the token
     const decoded = verify(token, JWT_SECRET) as { userId: string };
 
     const formData = await request.formData();
-    const file = formData.get('file') as File;
+    const file = formData.get('file') as unknown as { name: string; arrayBuffer: () => Promise<ArrayBuffer> };
 
-    if (!file) {
-      return NextResponse.json(
-        { error: 'No file provided' },
-        { status: 400 }
-      );
+    if (!file || typeof file.arrayBuffer !== 'function') {
+      return NextResponse.json({ error: 'Invalid file provided' }, { status: 400 });
     }
 
-    // Create a unique filename
+    const arrayBuffer = await file.arrayBuffer();
+    const buffer = Buffer.from(arrayBuffer);
+    const size = buffer.byteLength;
+
+    const originalName = file.name;
+    const baseName = originalName.replace(/\.[^/.]+$/, '');
     const timestamp = Date.now();
-    const filename = `${timestamp}-${file.name}`;
-    const filePath = join(process.cwd(), UPLOAD_DIR, filename);
+    const publicId = `${timestamp}-${baseName}`;
 
-    // Convert the file to a buffer
-    const buffer = Buffer.from(await file.arrayBuffer());
+    const result = await new Promise<any>((resolve, reject) => {
+      cloudinary.uploader.upload_stream(
+        {
+          resource_type: 'auto',
+          public_id: publicId,
+          folder: 'Oytra',
+        },
+        (error, result) => {
+          if (error) return reject(error);
+          resolve(result);
+        }
+      ).end(buffer);
+    });
+    console.log("🚀 => result:", result);
 
-    // Save the file
-    await writeFile(filePath, buffer);
-
-    const getFileType = (file: any) => {
-      console.log("🚀 => file:", file);
-      if (file.name.endsWith('.pdf')) return 'pdf';
-      if (file.name.endsWith('.xlsx') || file.name.endsWith('.xls') || file.name.endsWith('.csv')) return 'excel';
-      if (file.name.endsWith('.docx') || file.name.endsWith('.doc')) return 'word';
-      if (file.name.endsWith('.txt')) return 'txt';
+    const getFileType = (filename: string) => {
+      if (filename.endsWith('.pdf')) return 'pdf';
+      if (/\.(xlsx|xls|csv)$/.test(filename)) return 'excel';
+      if (/\.(docx|doc)$/.test(filename)) return 'word';
+      if (filename.endsWith('.txt')) return 'txt';
       return 'unknown';
-    }
+    };
+
+    const downloadUrl = result.secure_url.replace(
+      '/upload/',
+      `/upload/fl_attachment:${encodeURIComponent(originalName)}/`
+    );
 
     const fileMetadata = {
-      filename: filename,
-      originalName: file.name,
-      fileType: getFileType(file),
-      size: file.size,
-      path: filePath,
+      filename: result.public_id,
+      originalName,
+      fileType: result.format || getFileType(originalName),
+      size,
+      path: result.secure_url,
+      downloadUrl,
       userId: decoded.userId,
       uploadDate: new Date(),
     };
@@ -68,15 +77,10 @@ export async function POST(request: Request) {
     const newFile = new File(fileMetadata);
     await newFile.save();
 
-    return NextResponse.json(
-      { message: 'File uploaded successfully', file: newFile },
-      { status: 201 }
-    );
+    return NextResponse.json({ message: 'Uploaded successfully', file: newFile }, { status: 201 });
+
   } catch (error) {
-    console.error('File upload error:', error);
-    return NextResponse.json(
-      { error: 'Failed to upload file' },
-      { status: 500 }
-    );
+    console.error('Cloudinary upload error:', error);
+    return NextResponse.json({ error: 'Upload failed' }, { status: 500 });
   }
-} 
+}
