@@ -29,6 +29,10 @@ export default function Dashboard() {
   const fetchDashboardStats = async () => {
     try {
       const response = await fetch('/api/dashboard/stats');
+      if (response.status === 401) {
+        window.location.href = '/login?error=unauthorized';
+        return;
+      }
       if (response.ok) {
         const data = await response.json();
         setStats(data);
@@ -61,7 +65,7 @@ export default function Dashboard() {
   return (
     <div className="p-6">
       <h2 className="text-2xl font-bold mb-6">Dashboard</h2>
-      
+
       {/* Total Files Card */}
       <div className="bg-white rounded-lg shadow-md p-6 mb-6">
         <h3 className="text-lg font-semibold mb-2">Total Files</h3>

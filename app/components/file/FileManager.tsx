@@ -22,6 +22,10 @@ export default function FileManager() {
   const fetchFiles = async () => {
     try {
       const response = await fetch('/api/files');
+      if (response.status === 401) {
+        window.location.href = '/login?error=unauthorized';
+        return;
+      }
       if (response.ok) {
         const data = await response.json();
         setFiles(data);
@@ -44,7 +48,10 @@ export default function FileManager() {
         method: 'POST',
         body: formData,
       });
-
+      if (response.status === 401) {
+        window.location.href = '/login?error=unauthorized';
+        return;
+      }
       if (response.ok) {
         fetchFiles();
       } else {
@@ -60,6 +67,10 @@ export default function FileManager() {
   const handleDownload = async (fileId: string) => {
     try {
       const response = await fetch(`/api/files/${fileId}/download`);
+      if (response.status === 401) {
+        window.location.href = '/login?error=unauthorized';
+        return;
+      }
       if (response.ok) {
         const blob = await response.blob();
         const url = window.URL.createObjectURL(blob);

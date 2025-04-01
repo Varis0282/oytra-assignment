@@ -42,7 +42,7 @@ export default function LoginForm() {
         // Store the token in localStorage
         // localStorage.setItem('token', data.token);
         // store token in cookie
-        document.cookie = `auth-token=${data.token}; path=/; max-age=86400`;
+        document.cookie = `auth-token=${data.token}; path=/; max-age=8`;
         // Optionally, you can also store user info in localStorage or context
         // Redirect to dashboard
         router.push('/dashboard');

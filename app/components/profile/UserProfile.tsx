@@ -33,6 +33,10 @@ export default function UserProfile() {
   const fetchProfile = async () => {
     try {
       const response = await fetch('/api/profile');
+      if (response.status === 401) {
+        window.location.href = '/login?error=unauthorized';
+        return;
+      }
       if (response.ok) {
         const data = await response.json();
         setProfile(data);
@@ -61,7 +65,10 @@ export default function UserProfile() {
           phoneNumber: profile.phoneNumber,
         }),
       });
-
+      if (response.status === 401) {
+        window.location.href = '/login?error=unauthorized';
+        return;
+      }
       if (response.ok) {
         setEditing(false);
         fetchProfile();
@@ -85,7 +92,10 @@ export default function UserProfile() {
         },
         body: JSON.stringify(newAddress),
       });
-
+      if (response.status === 401) {
+        window.location.href = '/login?error=unauthorized';
+        return;
+      }
       if (response.ok) {
         setNewAddress({});
         fetchProfile();
@@ -102,7 +112,10 @@ export default function UserProfile() {
       const response = await fetch(`/api/profile/addresses/${addressId}`, {
         method: 'DELETE',
       });
-
+      if (response.status === 401) {
+        window.location.href = '/login?error=unauthorized';
+        return;
+      }
       if (response.ok) {
         fetchProfile();
       } else {
