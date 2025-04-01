@@ -1,0 +1,129 @@
+﻿JBP to SVDK
+* 6:00am ,26 Dec to 10:45am,27 Dec
+
+
+SVDK to ASR
+* 10:50am ,2 Jan to 5:20pm,2 Jan
+
+
+ASR to CDG
+* 7:35am ,4 Jan to 12:15pm,4 Jan
+
+
+CDG to NZM
+* 2:15am ,6 Jan to 6:21am,6 Jan
+
+
+NZM to JBP 
+* 5:55pm ,6 Jan to 7:45am,& Jan
+
+
+
+
+Amritsar(2 Jan , 3 Jan)
+* Golden Temple
+* Jalianwala Bagh
+* Wagha Border
+* Durgiana Temple
+* Gobindgarh Fort
+
+
+Chandigarh ( 4 jan , 5 Jan)
+* Iskcon Temple
+* Rock Garden of Chhattisgarh
+* Mahendra Chaudhary Zoological Park
+* Sector 17 market
+* Terraced Garden
+* Shiv Mandir Saketri
+* Sukhna Wildlife Sanctuary
+
+
+
+
+Train Details
+
+
+Jabalpur se Vaishnodevi , 26 December , 6:00am
+1. Mammi
+2. Riya
+3. Raj
+4. Badi Mammi
+5. Bua
+6. Jijaji
+7. Rajni didi
+8. Armaan
+9. Ayushi
+10. mammi(rajni didi)
+11. Meena Aunty
+12. Chinku
+13. Umesh Mama
+
+
+Katra to Amritsar , 2 Jan , 10:50am
+Ayushi - No berth
+Rajni didi - S8 , 1 , Lower
+Jijaji - S8 , 2 , Middle
+Armaan - S8 , 3 , Upper
+mammi(rajni didi) - S8 , 7 , Side Lower
+Chinku - S8 , 37 , Middle
+Meena Aunty - S8 , 38 , Upper
+Umesh Mama - S8 , 40 , Side Upper
+Mammi - S8 , 65 , Lower
+Badi Mammi - S8 , 66 , Middle 
+Bua - S8 , 68 , Lower
+Raj - S8 , 71 , Side Lower
+Riya - S8 , 72 , Side Upper
+
+
+Amritsar to Chandigarh , 4 Jan , 7:35am
+Ayushi - No berth
+Meena Aunty - S1 , 28 , Lower
+Chinku - S1 , 29 , Middle
+Rajni didi - S1 , 33 , Lower
+Armaan - S1 , 34 , Middle
+Jijaji - S1 , 35 , Upper
+mammi(rajni didi) - S1 , 36 , Lower
+Umesh Mama - S1 , 37 , Middle
+Badi Mammi - S1 , 66 , Middle
+Bua - S1 , 67 , Upper
+Mammi - S1 , 68 , Lower
+Raj - S1 , 69 , Middle
+Riya - S1 , 72 , Side Upper
+
+
+Chandigarh to Delhi , 6 Jan , 2:15am
+Ayushi - No berth
+Mammi - S3 , 41 , Lower
+Bua - S3 , 42 , Middle
+Badi Mammi - S3 , 44 , Lower
+Raj - S3 , 45 , Middle
+Riya - S3 , 48 , Side Upper
+Rajni didi - S3 , 49 , Lower
+Armaan - S3 , 50 , Middle
+Jijaji - S3 , 51 , Upper
+mammi(rajni didi) - S3 , 53 , Middle
+Chinku - S3 , 62 , Upper
+Meena Aunty - S3 , 64 , Side Upper
+Umesh Mama - S3 , 71 , Side Lower
+
+
+
+
+
+
+
+
+Delhi to Jabalpur , 6 Jan , 5:55pm
+Ayushi - No berth
+Mammi (Rajni Didi) - S5 , 7 , Side Lower
+Jijaji - S5 , 70 , Upper
+Rajni Didi - S5 , 71 , Side Lower
+Armaan - S5 , 72 , Side Upper
+Mammi - S5 , 73 , Lower
+Bua - S5 , 74 , Middle
+Badi Mammi - S5 , 76 , Lower
+Umesh Mama - S5 , 78 , Upper
+Raj - S5 , 79 , Side Lower
+Riya - S5 , 80 , Side Upper
+Chinku - S2 , 7 , Side Lower
+Meena Aunty - S2 , 8 , Side Upper
