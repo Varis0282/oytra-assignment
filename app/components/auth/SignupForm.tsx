@@ -12,6 +12,7 @@ export default function SignupForm() {
     confirmPassword: '',
     phoneNumber: '',
   });
+  const [disabled, setDisabled] = useState(false);
   const [error, setError] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -31,6 +32,7 @@ export default function SignupForm() {
     }
 
     try {
+      setDisabled(true);
       const response = await fetch('/api/auth/register', {
         method: 'POST',
         headers: {
@@ -52,7 +54,9 @@ export default function SignupForm() {
       } else {
         setError(data.error || 'Registration failed');
       }
+      setDisabled(false);
     } catch (err) {
+      setDisabled(false);
       setError('An error occurred during registration');
     }
   };
@@ -160,7 +164,9 @@ export default function SignupForm() {
           <div>
             <button
               type="submit"
-              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              disabled={disabled}
+              className={`${disabled && 'opacity-50 cursor-not-allowed'} ${error ? 'bg-red-600' : 'bg-indigo-600'
+                } group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500`}
             >
               Sign up
             </button>
