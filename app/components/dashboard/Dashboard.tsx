@@ -30,7 +30,7 @@ export default function Dashboard() {
     try {
       const response = await fetch('/api/dashboard/stats');
       if (response.status === 401) {
-        window.location.href = '/login?error=unauthorized';
+        window.location.href = '/login';
         return;
       }
       if (response.ok) {

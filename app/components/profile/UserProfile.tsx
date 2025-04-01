@@ -34,7 +34,7 @@ export default function UserProfile() {
     try {
       const response = await fetch('/api/profile');
       if (response.status === 401) {
-        window.location.href = '/login?error=unauthorized';
+        window.location.href = '/login';
         return;
       }
       if (response.ok) {
@@ -66,7 +66,7 @@ export default function UserProfile() {
         }),
       });
       if (response.status === 401) {
-        window.location.href = '/login?error=unauthorized';
+        window.location.href = '/login';
         return;
       }
       if (response.ok) {
@@ -93,7 +93,7 @@ export default function UserProfile() {
         body: JSON.stringify(newAddress),
       });
       if (response.status === 401) {
-        window.location.href = '/login?error=unauthorized';
+        window.location.href = '/login';
         return;
       }
       if (response.ok) {
@@ -113,7 +113,7 @@ export default function UserProfile() {
         method: 'DELETE',
       });
       if (response.status === 401) {
-        window.location.href = '/login?error=unauthorized';
+        window.location.href = '/login';
         return;
       }
       if (response.ok) {
